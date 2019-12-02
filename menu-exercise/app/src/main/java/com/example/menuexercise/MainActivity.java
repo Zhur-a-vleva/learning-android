@@ -1,21 +1,15 @@
 package com.example.menuexercise;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
-
-  @Override
-  public void onBackPressed() {
-
-  }
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {

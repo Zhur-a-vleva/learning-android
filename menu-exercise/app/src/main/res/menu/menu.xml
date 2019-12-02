@@ -1,34 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
-    
-    <item
-        android:id="@+id/profile"
-        android:title="@string/profile"
-        app:showAsAction="never"/>
-        <item
-        android:id="@+id/home"
-        android:title="@string/home">
+  xmlns:app="http://schemas.android.com/apk/res-auto">
 
-            <menu>
+  <item
+    android:id="@+id/profile"
+    android:title="@string/profile"
+    app:showAsAction="never" />
+  <item
+    android:id="@+id/home"
+    android:title="@string/home">
 
-                <item
-                    android:id="@+id/support"
-                    android:title="@string/support"
-                    />
+    <menu>
 
-                <item
-                    android:id="@+id/exit"
-                    android:title="@string/exit"
-                    />
+      <item
+        android:id="@+id/support"
+        android:title="@string/support" />
 
-            </menu>
+      <item
+        android:id="@+id/exit"
+        android:title="@string/exit" />
 
-        </item>
+    </menu>
 
-    <item
-        android:id="@+id/settings"
-        android:title="@string/settings"
-        app:showAsAction="never" />
+  </item>
+
+  <item
+    android:id="@+id/settings"
+    android:title="@string/settings"
+    app:showAsAction="never" />
 
 </menu>
