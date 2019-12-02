@@ -22,21 +22,27 @@ public class MainFragment extends Fragment {
   public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
       @Nullable Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.main_fragment, container, false);
-    // TODO: все инициализации вьюх и обработка делаются в `onViewCreated()`. Перенести туда.
+    return view;
+  }
+
+  @Override
+  public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
     Button button = view.findViewById(R.id.click);
     button.setOnClickListener(new OnClickListener() {
       @Override
       public void onClick(View v) {
-        // FIXME: switch без дефолтного кейса
         switch (v.getId()) {
           case R.id.click:
             FragmentTransaction transaction = getFragmentManager().beginTransaction();
-            transaction.replace(R.id.container, SecondFragment.newInstance());
+            Fragment fragment2 = SecondFragment.newInstance();
+            transaction.replace(R.id.container, fragment2);
+            transaction.addToBackStack(fragment2.getClass().getSimpleName());
             transaction.commit();
-            // FIXME: не забывайте break ставить, хотя когда один кейс, не обязательно.
+          default:
+            break;
         }
       }
     });
-    return view;
+    super.onViewCreated(view, savedInstanceState);
   }
 }

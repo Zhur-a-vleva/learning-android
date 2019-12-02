@@ -20,4 +20,6 @@ public class SecondFragment extends Fragment {
       @Nullable Bundle savedInstanceState) {
     return inflater.inflate(R.layout.secons_fragment, container, false);
   }
+
+
 }
