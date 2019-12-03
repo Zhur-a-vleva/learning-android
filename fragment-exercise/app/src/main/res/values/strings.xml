@@ -1,6 +1,8 @@
 <resources>
   <string name="app_name">FragmentExercise</string>
-  <string name="text">Привет! Нажми на кнопку, чтобы сменить фрагмент.</string>
-  <string name="click">Нажми на меня!</string>
-  <string name="congratulation">Поздравляю! Фрагмент успешно сменен</string>
+  <string name="text">Hi!</string>
+  <string name="click">Press</string>
+  <string name="send"></string>
+  <string name="write">Write something</string>
+  <string name="nothing">Nothing to write</string>
 </resources>
