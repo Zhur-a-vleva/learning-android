@@ -27,6 +27,8 @@ public class SecondFragment extends Fragment {
   @Override
   public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+    // TODO: перенести в onViewCreated(), тогда не придётся сохранять в статические поля
+    // статические поля в фрагменте - ататат
     Bundle bundle = getArguments();
     if (bundle != null) {
       String t = bundle.getString(TEXT_KEY);
@@ -50,6 +52,7 @@ public class SecondFragment extends Fragment {
   //Setting text
   @Override
   public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+    // TODO: посмотреть в super.onViewCreated(), надо ли его вызывать?
     super.onViewCreated(view, savedInstanceState);
     TextView textView = view.findViewById(R.id.text);
     textView.setText(new_text);
