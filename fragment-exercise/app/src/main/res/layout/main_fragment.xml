@@ -33,5 +33,11 @@
     android:layout_gravity="center"
     android:text="@string/show_dialog" />
 
-
+  <Button
+    android:id="@+id/call_fragment_dialog"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:text="@string/show_fragment_dialog" />
+  
 </LinearLayout>
