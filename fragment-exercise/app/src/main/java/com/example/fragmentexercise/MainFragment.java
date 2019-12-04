@@ -1,8 +1,6 @@
 package com.example.fragmentexercise;
 
-import android.annotation.SuppressLint;
 import android.app.AlertDialog;
-import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,7 +10,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -52,8 +49,6 @@ public class MainFragment extends Fragment {
     });
     Button show_dialog = view.findViewById(R.id.dialog_button);
     show_dialog.setOnClickListener(new OnClickListener() {
-      @SuppressLint("ResourceType")
-      @RequiresApi(api = VERSION_CODES.LOLLIPOP)
       @Override
       public void onClick(View v) {
         final AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
