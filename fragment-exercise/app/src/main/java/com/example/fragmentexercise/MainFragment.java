@@ -47,6 +47,7 @@ public class MainFragment extends Fragment {
         }
       }
     });
+
     Button show_dialog = view.findViewById(R.id.dialog_button);
     show_dialog.setOnClickListener(new OnClickListener() {
       @Override
@@ -68,6 +69,14 @@ public class MainFragment extends Fragment {
         dialog.show();
       }
     });
-    super.onViewCreated(view, savedInstanceState);
+
+    Button callFragment = view.findViewById(R.id.call_fragment_dialog);
+    callFragment.setOnClickListener(new OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        final FragmentDialog dialog = new FragmentDialog();
+        dialog.show(getFragmentManager(), dialog.getTag());
+      }
+    });
   }
 }

@@ -7,6 +7,8 @@
   <string name="nothing">Nothing to write</string>
   <string name="show_dialog">Show dialog</string>
   <string name="useful">Let\'s believe that here is useful information. Click the button to exit</string>
+  <string name="usefulInformation">Let\'s believe that it is FragmentDialog. Click the button to exit</string>
   <string name="exit">Exit</string>
   <string name="show_fragment_dialog">Show fragment dialog</string>
+
 </resources>
