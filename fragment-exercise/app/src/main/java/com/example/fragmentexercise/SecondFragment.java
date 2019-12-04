@@ -12,7 +12,6 @@ import androidx.fragment.app.Fragment;
 public class SecondFragment extends Fragment {
 
   private static String TEXT_KEY = "text";
-  private static String new_text;
 
   //Creating bundle
   public static SecondFragment newInstance(String text) {
@@ -27,17 +26,6 @@ public class SecondFragment extends Fragment {
   @Override
   public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    Bundle bundle = getArguments();
-    if (bundle != null) {
-      String t = bundle.getString(TEXT_KEY);
-      if (t.equals("")) {
-        new_text = getString(R.string.nothing);
-      } else {
-        new_text = bundle.getString(TEXT_KEY);
-      }
-    } else {
-      new_text = getString(R.string.nothing);
-    }
   }
 
   @Nullable
@@ -50,8 +38,17 @@ public class SecondFragment extends Fragment {
   //Setting text
   @Override
   public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-    super.onViewCreated(view, savedInstanceState);
     TextView textView = view.findViewById(R.id.text);
-    textView.setText(new_text);
+    Bundle bundle = getArguments();
+    if (bundle != null) {
+      String t = bundle.getString(TEXT_KEY);
+      if (t.equals("")) {
+        textView.setText(getString(R.string.nothing));
+      } else {
+        textView.setText(bundle.getString(TEXT_KEY));
+      }
+    } else {
+      textView.setText(getString(R.string.nothing));
+    }
   }
 }
