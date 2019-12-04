@@ -5,4 +5,7 @@
   <string name="send"></string>
   <string name="write">Write something</string>
   <string name="nothing">Nothing to write</string>
+  <string name="show_dialog">Show dialog</string>
+  <string name="useful">Let\'s believe that here is useful information. Click the button to exit</string>
+  <string name="exit">Exit</string>
 </resources>
