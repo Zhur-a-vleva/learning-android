@@ -22,8 +22,11 @@ public class MainActivity extends AppCompatActivity {
 
   @Override
   public void onBackPressed() {
-    if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
+    if (getSupportFragmentManager().getBackStackEntryCount() > 1) {
       getSupportFragmentManager().popBackStack();
+    } else if (getSupportFragmentManager().getBackStackEntryCount() == 1) {
+      getSupportFragmentManager().popBackStack();
+      super.onBackPressed();
     } else {
       super.onBackPressed();
     }
