@@ -17,6 +17,9 @@ public class FragmentDialog extends DialogFragment {
 
   private String TAG = FragmentDialog.class.getSimpleName();
 
+  public interface DialogCallback{
+  }
+
   @NonNull
   @Override
   public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {

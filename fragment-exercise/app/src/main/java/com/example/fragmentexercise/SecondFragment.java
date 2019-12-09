@@ -1,6 +1,8 @@
 package com.example.fragmentexercise;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,16 +41,17 @@ public class SecondFragment extends Fragment {
   @Override
   public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
     TextView textView = view.findViewById(R.id.text);
+
+    SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+    SharedPreferences.Editor editor = preferences.edit();
     Bundle bundle = getArguments();
     if (bundle != null) {
       String t = bundle.getString(TEXT_KEY);
-      if (t.equals("")) {
-        textView.setText(getString(R.string.nothing));
-      } else {
-        textView.setText(bundle.getString(TEXT_KEY));
+      if (!t.equals("")) {
+        editor.putString(TEXT_KEY, t);
+        editor.apply();
       }
-    } else {
-      textView.setText(getString(R.string.nothing));
     }
+    textView.setText(preferences.getString(TEXT_KEY, getString(R.string.nothing)));
   }
 }
