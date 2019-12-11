@@ -3,6 +3,7 @@ package com.example.fragmentexercise;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -15,10 +16,17 @@ import androidx.fragment.app.FragmentManager;
 
 public class FragmentDialog extends DialogFragment {
 
-  private String TAG = FragmentDialog.class.getSimpleName();
-
-  public interface DialogCallback{
+  interface ResultListener {
+    void onResult(String result);
   }
+
+  private final ResultListener resultCallback;
+
+  FragmentDialog(ResultListener resultCallback) {
+    this.resultCallback = resultCallback;
+  }
+
+  private String TAG = FragmentDialog.class.getSimpleName();
 
   @NonNull
   @Override
@@ -40,9 +48,10 @@ public class FragmentDialog extends DialogFragment {
     return dialog;
   }
 
-  //Show dialog
-  public void show(FragmentManager manager) {
-    FragmentDialog fragmentDialog = new FragmentDialog();
-    fragmentDialog.show(manager, TAG);
+  @Override
+  public void onDismiss(DialogInterface dialog) {
+    super.onDismiss(dialog);
+    //TODO: собрать результат (данные)
+    resultCallback.onResult("Сюда сложить нужные данные");
   }
 }

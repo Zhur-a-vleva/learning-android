@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import com.example.fragmentexercise.FragmentDialog.ResultListener;
 
 public class MainFragment extends Fragment {
 
@@ -74,7 +75,12 @@ public class MainFragment extends Fragment {
     callFragment.setOnClickListener(new OnClickListener() {
       @Override
       public void onClick(View v) {
-        final FragmentDialog dialog = new FragmentDialog();
+        final FragmentDialog dialog = new FragmentDialog(new ResultListener() {
+          @Override
+          public void onResult(String result) {
+            // TODO: Обрабатываем результат
+          }c
+        });
         dialog.show(getFragmentManager(), dialog.getTag());
       }
     });
