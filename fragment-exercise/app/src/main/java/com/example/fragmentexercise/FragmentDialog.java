@@ -51,7 +51,7 @@ public class FragmentDialog extends DialogFragment {
   @Override
   public void onDismiss(DialogInterface dialog) {
     super.onDismiss(dialog);
-    //TODO: собрать результат (данные)
-    resultCallback.onResult("Сюда сложить нужные данные");
+    String result = "Fragment was opened";
+    resultCallback.onResult(result);
   }
 }

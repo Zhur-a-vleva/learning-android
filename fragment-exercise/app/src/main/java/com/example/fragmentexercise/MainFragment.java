@@ -8,6 +8,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -78,8 +79,13 @@ public class MainFragment extends Fragment {
         final FragmentDialog dialog = new FragmentDialog(new ResultListener() {
           @Override
           public void onResult(String result) {
-            // TODO: Обрабатываем результат
-          }c
+            if (result.equals("Fragment was opened")) {
+              Toast.makeText(getContext(), "Fragmnet was opened", Toast.LENGTH_LONG).show();
+            }
+            else {
+              Toast.makeText(getContext(), "Fragment wasn't opened", Toast.LENGTH_LONG).show();
+            }
+          }
         });
         dialog.show(getFragmentManager(), dialog.getTag());
       }
