@@ -8,6 +8,16 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity {
 
+  /*
+   *
+   * Для чего нужно заменять id (в данном случае)
+   * public interface JSONPlaceHolderApi {
+   *  @GET("/posts/{id}")
+   *  public Call<Post> getPostWithID(@Path("id") int id);
+   * }
+   *
+   */
+
   private class NetworkService {
 
     private NetworkService service = null;
