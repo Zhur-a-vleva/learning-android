@@ -34,4 +34,5 @@ class ArtistRepositoryTest {
         val songs: Array<Song>? = repository.getSongsFromArtist(16775)
         println(songs?.get(0))
     }
+
 }

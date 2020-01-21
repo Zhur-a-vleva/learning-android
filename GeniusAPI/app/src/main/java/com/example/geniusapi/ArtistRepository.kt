@@ -14,12 +14,12 @@ class ArtistRepository(private val api: ApiInterface) {
         return response.body()?.response?.artist ?: Artist("Artist", 0)
     }
 
-    fun getSongsFromArtist(id: Int): Array<Song>? {
+    fun getSongsFromArtist(id: Int): Array<Song> {
         val response = api.getSongsFromArtist(
             id,
             token
         )
             .execute()
-        return response.body()?.response?.songs
+        return response.body()?.response?.songs?: emptyArray()
     }
 }
