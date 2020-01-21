@@ -11,4 +11,9 @@ interface ApiInterface {
 
     fun getArtist(@Path("id") artistId: Int, @Query("access_token") token: String):
             Call<Response>
+
+    @GET("artists/{id}/songs")
+
+    fun getSongsFromArtist(@Path("id") artistId: Int, @Query("access_token") token: String):
+            Call<Response>
 }

@@ -28,4 +28,10 @@ class ArtistRepositoryTest {
         val artist : Artist = repository.getArtist(16775)
         println(artist.name + " " + artist.id)
     }
+
+    @Test
+    fun getSongsFromArtist_test() {
+        val songs : Array<Song>? = repository.getSongsFromArtist(16775)
+        println(songs?.get(0))
+    }
 }
