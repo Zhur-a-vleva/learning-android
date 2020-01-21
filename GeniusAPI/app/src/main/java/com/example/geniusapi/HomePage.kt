@@ -15,7 +15,7 @@ class HomePage : Activity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        setRecyclerView()
+        // setRecyclerView() Я не знаю, что делать
     }
 
     fun setRecyclerView(repository: ArtistRepository) {
