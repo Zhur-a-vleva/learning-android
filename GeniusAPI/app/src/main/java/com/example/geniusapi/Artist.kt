@@ -9,7 +9,7 @@ data class Response(
 
 data class ArtistResponse(
     @SerializedName("artist") val artist: Artist,
-    @SerializedName("songs") val songs : Array<Song>
+    @SerializedName("songs") val songs: Array<Song>
 )
 
 data class Artist(

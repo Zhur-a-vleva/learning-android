@@ -6,15 +6,19 @@ class ArtistRepository(private val api: ApiInterface) {
 
     fun getArtist(id: Int): Artist {
         val response =
-            api.getArtist(id,
-                token)
+            api.getArtist(
+                id,
+                token
+            )
                 .execute()
-        return response.body()?.response?.artist?: Artist("Artist", 0)
+        return response.body()?.response?.artist ?: Artist("Artist", 0)
     }
 
-    fun getSongsFromArtist(id : Int): Array<Song>? {
-        val response = api.getSongsFromArtist(id,
-            token)
+    fun getSongsFromArtist(id: Int): Array<Song>? {
+        val response = api.getSongsFromArtist(
+            id,
+            token
+        )
             .execute()
         return response.body()?.response?.songs
     }
