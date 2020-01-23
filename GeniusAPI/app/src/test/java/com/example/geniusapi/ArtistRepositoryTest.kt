@@ -2,6 +2,7 @@ package com.example.geniusapi
 
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
+import org.junit.Assert.assertNotNull
 import org.junit.Test
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -26,13 +27,13 @@ class ArtistRepositoryTest {
     @Test
     fun getArtist_test() {
         val artist: Artist = repository.getArtist(16775)
-        println(artist.name + " " + artist.id)
+        assertNotNull(artist)
     }
 
     @Test
     fun getSongsFromArtist_test() {
         val songs: Array<Song>? = repository.getSongsFromArtist(16775)
+        // FIXME: use org.junit.Assert
         println(songs?.get(0))
     }
-
 }
