@@ -1,18 +1,18 @@
 package com.example.geniusapi
 
+import android.content.Context
+import android.view.ContextMenu
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
-class MyAdapter(private val data: Array<Song>) : RecyclerView.Adapter<MyAdapter.MyViewHolder>() {
+class MyAdapter(private val data: Array<Song>, private val context: Context) :
+    RecyclerView.Adapter<MyViewHolder>() {
 
-    class MyViewHolder(val textView: TextView) : RecyclerView.ViewHolder(textView)
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyAdapter.MyViewHolder {
-        val textView = LayoutInflater.from(parent.context)
-            .inflate(R.layout.my_text_view, parent, false) as TextView
-        return MyViewHolder(textView)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
+        return MyViewHolder(LayoutInflater.from(context).
+            inflate(R.layout.my_text_view, parent, false) as TextView)
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
@@ -23,4 +23,8 @@ class MyAdapter(private val data: Array<Song>) : RecyclerView.Adapter<MyAdapter.
         return data.size
     }
 
+}
+
+class MyViewHolder(view: TextView) : RecyclerView.ViewHolder(view) {
+    val textView = view
 }
