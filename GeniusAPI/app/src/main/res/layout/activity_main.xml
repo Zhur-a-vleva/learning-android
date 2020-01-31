@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<<<<<<< HEAD
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-=======
 <!--FIXME: ConstraintLayout нужен только для каких-то сложных вьюх. Тут можно использовать тэг `merge`-->
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
->>>>>>> 8b7d5abfe6173c11169bd1be548301ecb91c8c3e
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
