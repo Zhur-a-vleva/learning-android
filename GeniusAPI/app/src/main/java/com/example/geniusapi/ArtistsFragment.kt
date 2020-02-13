@@ -17,12 +17,15 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 //почему между элементами большое расстояние в recyclerView?
+// FIXME: у меня чё-то вообще ничего не отобразилось
 
 class ArtistsFragment : Fragment() {
 
     class MyAsyncTask : AsyncTask<Unit, Unit, Array<Artist>>() {
 
         override fun doInBackground(vararg params: Unit?): Array<Artist> {
+            // TODO: окхттп клиент будет создававться каждый раз, когда мы делаем запрос в сеть.
+            // Лучше бы выносить создание тяжёлых объектов в поле класса
             val okHttpClient = OkHttpClient.Builder()
                 .addInterceptor(HttpLoggingInterceptor().apply {
                     setLevel(HttpLoggingInterceptor.Level.HEADERS)
@@ -35,6 +38,7 @@ class ArtistsFragment : Fragment() {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
                 .create(ApiInterface::class.java)
+            // FIXME: везде, где можно использовать 'val` - стараться исользовать именно его. 'var' вообще плохая тема
             var artistsArray = arrayOf(
                 ArtistRepository(api).getArtist(16777),
                 ArtistRepository(api).getArtist(16772),
@@ -49,6 +53,7 @@ class ArtistsFragment : Fragment() {
 
     companion object {
 
+        // FIXME: вам идея подсказывает, подчёркивая зелёным - можно сделать константу. ЛКМ на имя переменной и ALT+ENTER
         val className = "ArtistsFragment"
         private lateinit var fragmentTransaction: FragmentTransaction
         private lateinit var context: Context
@@ -62,7 +67,11 @@ class ArtistsFragment : Fragment() {
 
     }
 
-    class MyAdapter(private val data: Array<Artist>, private val context: Context) :
+    class MyAdapter(
+        private val data: Array<Artist>,
+        private val context: Context,
+        private val clickListener: (Int) -> Unit
+    ) :
         RecyclerView.Adapter<MyViewHolder>() {
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
@@ -73,6 +82,9 @@ class ArtistsFragment : Fragment() {
 
         override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
             holder.textView.text = data[position].name
+            holder.textView.setOnClickListener {
+                clickListener(data[position].id)
+            }
         }
 
         override fun getItemCount(): Int {
@@ -82,6 +94,7 @@ class ArtistsFragment : Fragment() {
     }
 
     class MyViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        // FIXME: тут тоже идея подсказывает, что текствью может быть null, лучше задать тип переменной, как nullable 'TextView?'
         val textView = view.text_in_recyclerView
     }
 
@@ -90,6 +103,7 @@ class ArtistsFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        // FIXME: поменять на val
         var view: View = inflater.inflate(R.layout.fragment_layout, container, false)
 
         val asyncTask = MyAsyncTask().execute()
@@ -97,13 +111,15 @@ class ArtistsFragment : Fragment() {
 
         recyclerView = view.findViewById(R.id.recycler_view)
         recyclerView.layoutManager = LinearLayoutManager(ArtistsFragment.context)
-        recyclerView.adapter = MyAdapter(data, ArtistsFragment.context)
+        recyclerView.adapter = MyAdapter(data, ArtistsFragment.context, clickListener = { id ->
+            // TODO: implement
+        })
 
         recyclerView.setOnClickListener {
             //Как понять, какой элемент был выбран?
+            // FIXME: это клик листенер для всего RecyclerView, обработку клика на элементах надо делать в адаптере
         }
 
         return view
     }
-
 }
