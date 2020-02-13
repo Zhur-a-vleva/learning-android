@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Planer</string>
+
+    <string name="bottom_navigation_list">List</string>
+    <string name="bottom_navigation_tasks">Tasks</string>
+    <string name="bottom_navigation_settings">Settings</string>
+</resources>
