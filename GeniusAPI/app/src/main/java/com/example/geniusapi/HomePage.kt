@@ -7,6 +7,7 @@ import androidx.fragment.app.FragmentTransaction
 class HomePage : AppCompatActivity() {
 
     private val fragmentTransaction: FragmentTransaction = supportFragmentManager.beginTransaction()
+    private val artistsFragment = ArtistsFragment.newInstance(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -15,10 +16,15 @@ class HomePage : AppCompatActivity() {
 
 
         fragmentTransaction
-            .add(R.id.fragment_container, ArtistsFragment.newInstance( this, fragmentTransaction))
+            .add(R.id.fragment_container, artistsFragment)
             .commit()
         fragmentTransaction.addToBackStack(ArtistsFragment.className)
 
+    }
+
+    override fun onBackPressed() {
+        fragmentTransaction.remove(artistsFragment)
+        super.onBackPressed()
     }
 
 }

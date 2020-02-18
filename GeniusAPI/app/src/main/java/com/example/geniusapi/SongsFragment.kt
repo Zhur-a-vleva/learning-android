@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -18,21 +19,22 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class SongsFragment : Fragment() {
 
-    class MyAsyncTask : AsyncTask<Unit, Unit, Array<Song>>() {
+    class MyAsyncTask : AsyncTask<Unit, Unit, ArrayList<Song>>() {
 
-        override fun doInBackground(vararg params: Unit?): Array<Song> {
-            val okHttpClient = OkHttpClient.Builder()
-                .addInterceptor(HttpLoggingInterceptor().apply {
-                    setLevel(HttpLoggingInterceptor.Level.HEADERS)
-                })
-                .build()
+        private val okHttpClient = OkHttpClient.Builder()
+            .addInterceptor(HttpLoggingInterceptor().apply {
+                setLevel(HttpLoggingInterceptor.Level.HEADERS)
+            })
+            .build()
 
-            val api: ApiInterface = Retrofit.Builder()
-                .baseUrl("http://api.genius.com/")
-                .client(okHttpClient)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build()
-                .create(ApiInterface::class.java)
+        private val api: ApiInterface = Retrofit.Builder()
+            .baseUrl("http://api.genius.com/")
+            .client(okHttpClient)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+            .create(ApiInterface::class.java)
+
+        override fun doInBackground(vararg params: Unit?): ArrayList<Song> {
             return ArtistRepository(api).getSongsFromArtist(id)
         }
 
@@ -40,25 +42,22 @@ class SongsFragment : Fragment() {
 
     companion object {
 
-        val className = "SongsFragment"
-        private lateinit var fragmentTransaction: FragmentTransaction
+        const val className = "SongsFragment"
         private lateinit var context: Context
         private lateinit var recyclerView: RecyclerView
         private var id: Int = 0
 
         fun newInstance(
             cont: Context,
-            transaction: FragmentTransaction,
             artistsId: Int
         ): SongsFragment {
             context = cont
-            fragmentTransaction = transaction
             id = artistsId
             return SongsFragment()
         }
     }
 
-    class MyAdapter(private val data: Array<Song>, private val context: Context) :
+    class MyAdapter(private val data: ArrayList<Song>, private val context: Context) :
         RecyclerView.Adapter<MyViewHolder>() {
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
@@ -78,7 +77,7 @@ class SongsFragment : Fragment() {
     }
 
     class MyViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val textView = view.text_in_recyclerView
+        val textView: TextView = view.text_in_recyclerView
     }
 
     override fun onCreateView(
