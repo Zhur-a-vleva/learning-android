@@ -9,11 +9,17 @@ interface ApiInterface {
 
     @GET("artists/{id}")
 
-    fun getArtist(@Path("id") artistId: Int, @Query("access_token") token: String):
+    fun getArtist(
+        @Path("id") artistId: Int,
+        @Query("access_token") token: String
+    ):
             Call<Response>
 
-    @GET("artists/{id}/songs")
+    @GET("artists/{id}/songs?per_page=50")
 
-    fun getSongsFromArtist(@Path("id") artistId: Int, @Query("access_token") token: String):
+    fun getSongsFromArtist(
+        @Path("id") artistId: Int,
+        @Query("access_token") token: String
+    ):
             Call<Response>
 }

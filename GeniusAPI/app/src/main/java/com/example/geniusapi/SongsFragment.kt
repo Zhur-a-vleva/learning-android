@@ -1,6 +1,8 @@
 package com.example.geniusapi
 
 import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import android.os.AsyncTask
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -57,7 +59,11 @@ class SongsFragment : Fragment() {
         }
     }
 
-    class MyAdapter(private val data: ArrayList<Song>, private val context: Context) :
+    class MyAdapter(
+        private val data: ArrayList<Song>,
+        private val context: Context,
+        private val clickListener: (String) -> (Unit)
+    ) :
         RecyclerView.Adapter<MyViewHolder>() {
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
@@ -68,6 +74,7 @@ class SongsFragment : Fragment() {
 
         override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
             holder.textView.text = data[position].title
+            holder.textView.setOnClickListener { clickListener(data[position].url) }
         }
 
         override fun getItemCount(): Int {
@@ -92,7 +99,10 @@ class SongsFragment : Fragment() {
 
         recyclerView = view.findViewById(R.id.recycler_view)
         recyclerView.layoutManager = LinearLayoutManager(SongsFragment.context)
-        recyclerView.adapter = MyAdapter(data, SongsFragment.context)
+        recyclerView.adapter = MyAdapter(data, SongsFragment.context) { url ->
+            val browseIntent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+            startActivity(browseIntent)
+        }
 
         return view
     }
