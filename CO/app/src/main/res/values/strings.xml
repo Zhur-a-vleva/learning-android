@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">CO</string>
+    <string name="login_system">Вход в систему</string>
+    <string name="email">E-mail</string>
+    <string name="password">Пароль</string>
+    <string name="login">ВОЙТИ</string>
+    <string name="forgot_password">Я забыл пароль</string>
+    <string name="register">Зарегистрироваться</string>
+    <string name="back">Назад</string>
 </resources>
