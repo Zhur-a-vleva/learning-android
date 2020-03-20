@@ -1,13 +1,14 @@
-package com.example.geniusapi
+package ui
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentTransaction
 
-class HomePage : AppCompatActivity() {
+class Main : AppCompatActivity() {
 
     private val fragmentTransaction: FragmentTransaction = supportFragmentManager.beginTransaction()
-    private val artistsFragment = ArtistsFragment.newInstance(this)
+    private val artistsFragment =
+        ArtistView.newInstance(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -18,7 +19,7 @@ class HomePage : AppCompatActivity() {
         fragmentTransaction
             .add(R.id.fragment_container, artistsFragment)
             .commit()
-        fragmentTransaction.addToBackStack(ArtistsFragment.className)
+        fragmentTransaction.addToBackStack(ArtistView.className)
 
     }
 

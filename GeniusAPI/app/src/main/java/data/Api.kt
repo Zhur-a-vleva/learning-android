@@ -1,25 +1,24 @@
-package com.example.geniusapi
+package data
 
-import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
 
-interface ApiInterface {
+interface Api {
 
     @GET("artists/{id}")
 
-    fun getArtist(
+    fun getArtistData(
         @Path("id") artistId: Int,
         @Query("access_token") token: String
     ):
-            Call<Response>
+            retrofit2.Call<Data>
 
     @GET("artists/{id}/songs?per_page=50")
 
-    fun getSongsFromArtist(
+    fun getSongData(
         @Path("id") artistId: Int,
         @Query("access_token") token: String
     ):
-            Call<Response>
+            retrofit2.Call<Data>
 }
