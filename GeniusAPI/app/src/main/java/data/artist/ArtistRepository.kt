@@ -14,14 +14,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class ArtistRepository() {
 
-    class MyViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val textView: TextView = view.text_in_recyclerView
-    }
-
-    class MyAsyncTask : AsyncTask<Unit, Unit, List<Artist>>() {
-
-        private val token = "YFTSs_-BbAkmrn16cEuQ-7mT1TXDpTKEASL66lDUBXRzIljYA6HBSdMfjxFcPfGA"
-
+    companion object {
         private val okHttpClient = OkHttpClient.Builder()
             .addInterceptor(HttpLoggingInterceptor().apply {
                 setLevel(HttpLoggingInterceptor.Level.HEADERS)
@@ -34,6 +27,15 @@ class ArtistRepository() {
             .addConverterFactory(GsonConverterFactory.create())
             .build()
             .create(Api::class.java)
+    }
+
+    class MyViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        val textView: TextView = view.text_in_recyclerView
+    }
+
+    class MyAsyncTask : AsyncTask<Unit, Unit, List<Artist>>() {
+
+        private val token = "YFTSs_-BbAkmrn16cEuQ-7mT1TXDpTKEASL66lDUBXRzIljYA6HBSdMfjxFcPfGA"
 
         private fun getArtist(id: Int): Artist {
             val data = api.getArtistData(id, token).execute()

@@ -25,15 +25,6 @@ class SongRepository() {
         fun getId(): Int {
             return id
         }
-    }
-
-    class MyViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val textView: TextView = view.text_in_recyclerView
-    }
-
-    class MyAsyncTask : AsyncTask<Unit, Unit, List<Song>>() {
-
-        private val token = "YFTSs_-BbAkmrn16cEuQ-7mT1TXDpTKEASL66lDUBXRzIljYA6HBSdMfjxFcPfGA"
 
         private val okHttpClient = OkHttpClient.Builder()
             .addInterceptor(HttpLoggingInterceptor().apply {
@@ -47,6 +38,16 @@ class SongRepository() {
             .addConverterFactory(GsonConverterFactory.create())
             .build()
             .create(Api::class.java)
+
+    }
+
+    class MyViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        val textView: TextView = view.text_in_recyclerView
+    }
+
+    class MyAsyncTask : AsyncTask<Unit, Unit, List<Song>>() {
+
+        private val token = "YFTSs_-BbAkmrn16cEuQ-7mT1TXDpTKEASL66lDUBXRzIljYA6HBSdMfjxFcPfGA"
 
         override fun doInBackground(vararg params: Unit?): List<Song> {
             return getSongs(getId())
