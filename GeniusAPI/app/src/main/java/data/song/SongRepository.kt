@@ -1,12 +1,8 @@
 package data.song
 
 import android.os.AsyncTask
-import android.view.View
-import android.widget.TextView
-import androidx.recyclerview.widget.RecyclerView
 import data.Api
 import data.Song
-import kotlinx.android.synthetic.main.my_text_view.view.*
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -39,10 +35,6 @@ class SongRepository() {
             .build()
             .create(Api::class.java)
 
-    }
-
-    class MyViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val textView: TextView = view.text_in_recyclerView
     }
 
     class MyAsyncTask : AsyncTask<Unit, Unit, List<Song>>() {

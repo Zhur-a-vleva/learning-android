@@ -5,11 +5,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import data.Artist
-import data.artist.ArtistRepository
+import kotlinx.android.synthetic.main.my_text_view.view.*
 import logic.ArtistPresenter
 
 class ArtistView : Fragment() {
@@ -57,18 +58,18 @@ class ArtistView : Fragment() {
         private val context: Context,
         private val clickListener: (Int) -> Unit
     ) :
-        RecyclerView.Adapter<ArtistRepository.MyViewHolder>() {
+        RecyclerView.Adapter<MyViewHolder>() {
 
         override fun onCreateViewHolder(
             parent: ViewGroup,
             viewType: Int
-        ): ArtistRepository.MyViewHolder {
-            return ArtistPresenter().getViewHolder(
+        ): MyViewHolder {
+            return MyViewHolder(
                 LayoutInflater.from(context).inflate(R.layout.my_text_view, parent, false)
             )
         }
 
-        override fun onBindViewHolder(holder: ArtistRepository.MyViewHolder, position: Int) {
+        override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
             holder.textView.text = data[position].name
             holder.textView.setOnClickListener {
                 clickListener(data[position].id)
@@ -81,4 +82,7 @@ class ArtistView : Fragment() {
 
     }
 
+    class MyViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        val textView: TextView = view.text_in_recyclerView
+    }
 }
