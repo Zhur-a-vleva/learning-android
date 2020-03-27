@@ -24,8 +24,8 @@ class SongView : Fragment() {
         private lateinit var recyclerView: RecyclerView
 
         fun newInstance(
-            cont: Context,
-            id: Int
+                cont: Context,
+                id: Int
         ): SongView {
             context = cont
             SongPresenter().setId(id)
@@ -34,9 +34,9 @@ class SongView : Fragment() {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater,
+            container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View? {
         var view: View = inflater.inflate(R.layout.fragment_layout, container, false)
 
@@ -53,20 +53,20 @@ class SongView : Fragment() {
     }
 
     class MyAdapter(
-        private val data: List<Song>,
-        private val context: Context,
-        private val clickListener: (String) -> (Unit)
+            private val data: List<Song>,
+            private val context: Context,
+            private val clickListener: (String) -> (Unit)
     ) :
-        RecyclerView.Adapter<MyViewHolder>() {
+            RecyclerView.Adapter<MyViewHolder>() {
 
         override fun onCreateViewHolder(
-            parent: ViewGroup,
-            viewType: Int
+                parent: ViewGroup,
+                viewType: Int
         ): MyViewHolder {
             return MyViewHolder(
-                (
-                        LayoutInflater.from(context).inflate(R.layout.my_text_view, parent, false)
-                        )
+                    (
+                            LayoutInflater.from(context).inflate(R.layout.my_text_view, parent, false)
+                            )
             )
         }
 

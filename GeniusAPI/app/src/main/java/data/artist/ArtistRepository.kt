@@ -12,17 +12,17 @@ class ArtistRepository() {
 
     companion object {
         private val okHttpClient = OkHttpClient.Builder()
-            .addInterceptor(HttpLoggingInterceptor().apply {
-                setLevel(HttpLoggingInterceptor.Level.HEADERS)
-            })
-            .build()
+                .addInterceptor(HttpLoggingInterceptor().apply {
+                    setLevel(HttpLoggingInterceptor.Level.HEADERS)
+                })
+                .build()
 
         private val api: Api = Retrofit.Builder()
-            .baseUrl("http://api.genius.com/")
-            .client(okHttpClient)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-            .create(Api::class.java)
+                .baseUrl("http://api.genius.com/")
+                .client(okHttpClient)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build()
+                .create(Api::class.java)
     }
 
     class MyAsyncTask : AsyncTask<Unit, Unit, List<Artist>>() {
@@ -36,8 +36,8 @@ class ArtistRepository() {
 
         override fun doInBackground(vararg params: Unit?): List<Artist> {
             return listOf(
-                getArtist(16777),
-                getArtist(16772), getArtist(16775), getArtist(16771), getArtist(16773)
+                    getArtist(16777),
+                    getArtist(16772), getArtist(16775), getArtist(16771), getArtist(16773)
             )
         }
 

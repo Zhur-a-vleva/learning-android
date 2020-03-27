@@ -1,12 +1,12 @@
 package logic
 
-import data.Artist
 import data.artist.ArtistRepository
+import ui.ArtistView
 
-class ArtistPresenter() {
+class ArtistPresenter(private val view: ArtistView) {
 
-    fun getData(): List<Artist> {
-        return ArtistRepository.MyAsyncTask().execute().get()
+    fun onRefresh() {
+        val data = ArtistRepository.MyAsyncTask().execute().get()
+        view.showArtists(data)
     }
-
 }
