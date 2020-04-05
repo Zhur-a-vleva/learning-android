@@ -10,12 +10,13 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import data.Artist
+import data.song.SongRepository
 import kotlinx.android.synthetic.main.my_text_view.view.*
 import logic.ArtistPresenter
 
 class ArtistFragment : Fragment(), ArtistView {
 
-    private var adapter: MyAdapter? = null
+    private lateinit var adapter: ArtistAdapter
 
     companion object {
 
@@ -29,59 +30,58 @@ class ArtistFragment : Fragment(), ArtistView {
         }
     }
 
-    // FIXME: соотв. логику перенести в onViewCreated()
     override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View? {
+        return inflater.inflate(R.layout.fragment_layout, container, false)
+    }
 
-        val view: View = inflater.inflate(R.layout.fragment_layout, container, false)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val fragmentTransaction = fragmentManager?.beginTransaction()
 
         recyclerView = view.findViewById(R.id.recycler_view)
         recyclerView.layoutManager = LinearLayoutManager(context)
-        this.adapter = MyAdapter(null, ArtistFragment.context) { id ->
+        this.adapter = ArtistAdapter(null, ArtistFragment.context) { id ->
+            SongRepository.setId(id)
             fragmentTransaction
-                    ?.replace(
-                            R.id.fragment_container,
-                            SongView.newInstance(ArtistFragment.context, id)
-                    )
-                    ?.commit()
-            fragmentTransaction?.addToBackStack(SongView.className)
+                ?.replace(
+                    R.id.fragment_container,
+                    SongFragment.newInstance(ArtistFragment.context)
+                )
+                ?.commit()
+            fragmentTransaction?.addToBackStack(SongFragment.className)
         }
 
         recyclerView.adapter = this.adapter
 
         val presenter = ArtistPresenter(this)
         presenter.onRefresh()
-
-        return view
     }
-
 
     class MyViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val textView: TextView = view.text_in_recyclerView
     }
 
     override fun showArtists(data: List<Artist>) {
-        adapter?.submitData(data)
+        adapter.submitData(data)
     }
 }
 
-class MyAdapter(
-        private var data: List<Artist>?,
-        private val context: Context,
-        private val clickListener: (Int) -> Unit
+class ArtistAdapter(
+    private var data: List<Artist>?,
+    private val context: Context,
+    private val clickListener: (Int) -> Unit
 ) :
-        RecyclerView.Adapter<ArtistFragment.MyViewHolder>() {
+    RecyclerView.Adapter<ArtistFragment.MyViewHolder>() {
 
     override fun onCreateViewHolder(
-            parent: ViewGroup,
-            viewType: Int
+        parent: ViewGroup,
+        viewType: Int
     ): ArtistFragment.MyViewHolder {
         return ArtistFragment.MyViewHolder(
-                LayoutInflater.from(context).inflate(R.layout.my_text_view, parent, false)
+            LayoutInflater.from(context).inflate(R.layout.my_text_view, parent, false)
         )
     }
 

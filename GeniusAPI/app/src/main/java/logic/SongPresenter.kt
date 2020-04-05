@@ -1,15 +1,13 @@
 package logic
 
-import data.Song
 import data.song.SongRepository
+import ui.SongView
 
-class SongPresenter {
+class SongPresenter(private val view: SongView) {
 
-    fun setId(id: Int) {
-        SongRepository.setId(id)
+    fun onRefresh() {
+        val data = SongRepository.MyAsyncTask().execute().get()
+        view.showSongs(data)
     }
 
-    fun getData(): List<Song> {
-        return SongRepository.MyAsyncTask().execute().get()
-    }
 }

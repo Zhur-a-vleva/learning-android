@@ -23,17 +23,17 @@ class SongRepository() {
         }
 
         private val okHttpClient = OkHttpClient.Builder()
-                .addInterceptor(HttpLoggingInterceptor().apply {
-                    setLevel(HttpLoggingInterceptor.Level.HEADERS)
-                })
-                .build()
+            .addInterceptor(HttpLoggingInterceptor().apply {
+                setLevel(HttpLoggingInterceptor.Level.HEADERS)
+            })
+            .build()
 
         private val api: Api = Retrofit.Builder()
-                .baseUrl("http://api.genius.com/")
-                .client(okHttpClient)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build()
-                .create(Api::class.java)
+            .baseUrl("http://api.genius.com/")
+            .client(okHttpClient)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+            .create(Api::class.java)
 
     }
 

@@ -8,7 +8,7 @@ class Main : AppCompatActivity() {
 
     private val fragmentTransaction: FragmentTransaction = supportFragmentManager.beginTransaction()
     private val artistsFragment =
-            ArtistFragment.newInstance(this)
+        ArtistFragment.newInstance(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -17,8 +17,8 @@ class Main : AppCompatActivity() {
 
 
         fragmentTransaction
-                .add(R.id.fragment_container, artistsFragment)
-                .commit()
+            .add(R.id.fragment_container, artistsFragment)
+            .commit()
         fragmentTransaction.addToBackStack(ArtistFragment.className)
 
     }
