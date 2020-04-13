@@ -14,7 +14,7 @@ import data.song.SongRepository
 import kotlinx.android.synthetic.main.my_text_view.view.*
 import logic.ArtistPresenter
 
-class ArtistFragment : Fragment(), ArtistView {
+class ArtistFragment : Fragment(R.layout.fragment_layout), ArtistView {
 
     private lateinit var adapter: ArtistAdapter
 
@@ -28,14 +28,6 @@ class ArtistFragment : Fragment(), ArtistView {
             context = cont
             return ArtistFragment()
         }
-    }
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_layout, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
