@@ -9,7 +9,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import data.Song
 import kotlinx.android.synthetic.main.my_text_view.view.*
@@ -36,7 +38,7 @@ class SongFragment : Fragment(R.layout.fragment_layout), SongView {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         recyclerView = view.findViewById(R.id.recycler_view)
         recyclerView.layoutManager = LinearLayoutManager(context)
-        this.adapter = SongAdapter(null, SongFragment.context) { url ->
+        this.adapter = SongAdapter(SongFragment.context) { url ->
             val browseIntent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
             startActivity(browseIntent)
         }
@@ -55,33 +57,32 @@ class SongFragment : Fragment(R.layout.fragment_layout), SongView {
     }
 }
 
-class SongAdapter(
-    private var data: List<Song>?,
-    private val context: Context,
-    private val clickListener: (String) -> (Unit)
-) :
-    RecyclerView.Adapter<SongFragment.MyViewHolder>() {
-
-    override fun onCreateViewHolder(
-        parent: ViewGroup,
-        viewType: Int
-    ): SongFragment.MyViewHolder {
+class SongAdapter(private val context: Context, private val clickListener: (String) -> Unit) :
+    ListAdapter<Song, SongFragment.MyViewHolder>(DiffCallBack()) {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SongFragment.MyViewHolder {
         return SongFragment.MyViewHolder(
             (LayoutInflater.from(context).inflate(R.layout.my_text_view, parent, false))
         )
     }
 
     override fun onBindViewHolder(holder: SongFragment.MyViewHolder, position: Int) {
-        holder.textView.text = data?.get(position)?.title
-        holder.textView.setOnClickListener { clickListener(data?.get(position)?.url ?: "") }
+        holder.textView.text = getItem(position)?.title
+        holder.textView.setOnClickListener { clickListener(getItem(position)?.url ?: "") }
     }
 
-    override fun getItemCount(): Int {
-        return data?.size ?: 0
+    class DiffCallBack : DiffUtil.ItemCallback<Song>() {
+        override fun areItemsTheSame(oldItem: Song, newItem: Song): Boolean {
+            return oldItem.id == newItem.id
+        }
+
+        override fun areContentsTheSame(oldItem: Song, newItem: Song): Boolean {
+            return oldItem == newItem
+        }
+
     }
 
     fun submitData(data: List<Song>) {
-        this.data = data
+        submitList(data)
         notifyDataSetChanged()
     }
 }

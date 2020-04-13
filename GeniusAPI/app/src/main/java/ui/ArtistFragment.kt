@@ -7,7 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import data.Artist
 import data.song.SongRepository
@@ -35,7 +37,7 @@ class ArtistFragment : Fragment(R.layout.fragment_layout), ArtistView {
 
         recyclerView = view.findViewById(R.id.recycler_view)
         recyclerView.layoutManager = LinearLayoutManager(context)
-        this.adapter = ArtistAdapter(null, ArtistFragment.context) { id ->
+        this.adapter = ArtistAdapter(ArtistFragment.context) { id ->
             SongRepository.setId(id)
             fragmentTransaction
                 ?.replace(
@@ -52,7 +54,7 @@ class ArtistFragment : Fragment(R.layout.fragment_layout), ArtistView {
         presenter.onRefresh()
     }
 
-    class MyViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    class ArtistViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val textView: TextView = view.text_in_recyclerView
     }
 
@@ -62,34 +64,39 @@ class ArtistFragment : Fragment(R.layout.fragment_layout), ArtistView {
 }
 
 class ArtistAdapter(
-    private var data: List<Artist>?,
-    private val context: Context,
-    private val clickListener: (Int) -> Unit
+    private val context: Context, val clickListener: (Int) -> (Unit)
 ) :
-    RecyclerView.Adapter<ArtistFragment.MyViewHolder>() {
+    ListAdapter<Artist, ArtistFragment.ArtistViewHolder>(DiffCallback()) {
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): ArtistFragment.MyViewHolder {
-        return ArtistFragment.MyViewHolder(
+    ): ArtistFragment.ArtistViewHolder {
+        return ArtistFragment.ArtistViewHolder(
             LayoutInflater.from(context).inflate(R.layout.my_text_view, parent, false)
         )
     }
 
-    override fun onBindViewHolder(holder: ArtistFragment.MyViewHolder, position: Int) {
-        holder.textView.text = data?.get(position)?.name
+    override fun onBindViewHolder(holder: ArtistFragment.ArtistViewHolder, position: Int) {
+        holder.textView.text = getItem(position)?.name ?: ""
         holder.textView.setOnClickListener {
-            clickListener(data?.get(position)?.id ?: 0)
+            clickListener(getItem(position)?.id ?: 0)
         }
     }
 
-    override fun getItemCount(): Int {
-        return data?.size ?: 0
+    class DiffCallback : DiffUtil.ItemCallback<Artist>() {
+        override fun areItemsTheSame(oldItem: Artist, newItem: Artist): Boolean {
+            return oldItem.id == newItem.id
+        }
+
+        override fun areContentsTheSame(oldItem: Artist, newItem: Artist): Boolean {
+            return oldItem == newItem
+        }
+
     }
 
     fun submitData(data: List<Artist>) {
-        this.data = data
+        submitList(data)
         notifyDataSetChanged()
     }
 }
