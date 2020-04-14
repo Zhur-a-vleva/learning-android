@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -61,6 +62,19 @@ class ArtistFragment : Fragment(R.layout.fragment_layout), ArtistView {
     override fun showArtists(data: List<Artist>) {
         adapter.submitList(data)
     }
+
+    // TODO: проверить, почему не показывает тост
+    override fun showError(it: Throwable?) {
+        Toast.makeText(context, "Error: ${it?.message}", Toast.LENGTH_LONG).show()
+    }
+
+    override fun showLoading() {
+        // TODO: добавить крутилку
+    }
+
+    override fun hideLoading() {
+        // TODO: убрать крутилку, показать RecyclerView
+    }
 }
 
 class ArtistAdapter(
@@ -99,4 +113,7 @@ class ArtistAdapter(
 
 interface ArtistView {
     fun showArtists(data: List<Artist>)
+    fun showError(it: Throwable?)
+    fun showLoading()
+    fun hideLoading()
 }

@@ -1,14 +1,16 @@
 package data.artist
 
-import android.os.AsyncTask
 import data.Api
 import data.Artist
+import io.reactivex.Single
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 
-class ArtistRepository() {
+class ArtistRepository {
+    private val token = "YFTSs_-BbAkmrn16cEuQ-7mT1TXDpTKEASL66lDUBXRzIljYA6HBSdMfjxFcPfGA"
 
     companion object {
         private val okHttpClient = OkHttpClient.Builder()
@@ -21,25 +23,16 @@ class ArtistRepository() {
             .baseUrl("http://api.genius.com/")
             .client(okHttpClient)
             .addConverterFactory(GsonConverterFactory.create())
+            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .build()
             .create(Api::class.java)
     }
 
-    class MyAsyncTask : AsyncTask<Unit, Unit, List<Artist>>() {
-
-        private val token = "YFTSs_-BbAkmrn16cEuQ-7mT1TXDpTKEASL66lDUBXRzIljYA6HBSdMfjxFcPfGA"
-
-        private fun getArtist(id: Int): Artist {
-            val data = api.getArtistData(id, token).execute()
-            return data.body()?.response?.artist ?: Artist("Artist", 0)
-        }
-
-        override fun doInBackground(vararg params: Unit?): List<Artist> {
-            return listOf(
-                getArtist(16777),
-                getArtist(16772), getArtist(16775), getArtist(16771), getArtist(16773)
-            )
-        }
-
+    fun getArtist(id: Int): Single<Artist> {
+        return api.getArtistData(id, token)
+            // f(x) = y
+            // f(Data) -> Artist
+            // Single[Data] -> Single[Artist]
+            .map { data -> data.response.artist }
     }
 }
