@@ -59,7 +59,7 @@ class ArtistFragment : Fragment(R.layout.fragment_layout), ArtistView {
     }
 
     override fun showArtists(data: List<Artist>) {
-        adapter.submitData(data)
+        adapter.submitList(data)
     }
 }
 
@@ -95,10 +95,6 @@ class ArtistAdapter(
 
     }
 
-    fun submitData(data: List<Artist>) {
-        submitList(data)
-        notifyDataSetChanged()
-    }
 }
 
 interface ArtistView {

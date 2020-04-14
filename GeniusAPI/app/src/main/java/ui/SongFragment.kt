@@ -53,7 +53,7 @@ class SongFragment : Fragment(R.layout.fragment_layout), SongView {
     }
 
     override fun showSongs(data: List<Song>) {
-        adapter.submitData(data)
+        adapter.submitList(data)
     }
 }
 
@@ -81,10 +81,6 @@ class SongAdapter(private val context: Context, private val clickListener: (Stri
 
     }
 
-    fun submitData(data: List<Song>) {
-        submitList(data)
-        notifyDataSetChanged()
-    }
 }
 
 interface SongView {
