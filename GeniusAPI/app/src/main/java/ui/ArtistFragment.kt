@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
@@ -13,13 +14,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import data.Artist
-import data.song.SongRepository
 import kotlinx.android.synthetic.main.my_text_view.view.*
 import logic.ArtistPresenter
+import logic.SongPresenter
 
 class ArtistFragment : Fragment(R.layout.fragment_layout), ArtistView {
 
     private lateinit var adapter: ArtistAdapter
+    private lateinit var progress: ProgressBar
 
     companion object {
 
@@ -36,10 +38,12 @@ class ArtistFragment : Fragment(R.layout.fragment_layout), ArtistView {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val fragmentTransaction = fragmentManager?.beginTransaction()
 
+        progress = view.findViewById(R.id.progress)
+
         recyclerView = view.findViewById(R.id.recycler_view)
         recyclerView.layoutManager = LinearLayoutManager(context)
         this.adapter = ArtistAdapter(ArtistFragment.context) { id ->
-            SongRepository.setId(id)
+            SongPresenter.id = id
             fragmentTransaction
                 ?.replace(
                     R.id.fragment_container,
@@ -63,17 +67,16 @@ class ArtistFragment : Fragment(R.layout.fragment_layout), ArtistView {
         adapter.submitList(data)
     }
 
-    // TODO: проверить, почему не показывает тост
-    override fun showError(it: Throwable?) {
-        Toast.makeText(context, "Error: ${it?.message}", Toast.LENGTH_LONG).show()
+    override fun showError(it: Throwable) {
+        Toast.makeText(context, "Error: ${it.message}", Toast.LENGTH_LONG).show()
     }
 
     override fun showLoading() {
-        // TODO: добавить крутилку
+        progress.visibility = ProgressBar.VISIBLE
     }
 
     override fun hideLoading() {
-        // TODO: убрать крутилку, показать RecyclerView
+        progress.visibility = ProgressBar.INVISIBLE
     }
 }
 
@@ -113,7 +116,7 @@ class ArtistAdapter(
 
 interface ArtistView {
     fun showArtists(data: List<Artist>)
-    fun showError(it: Throwable?)
+    fun showError(it: Throwable)
     fun showLoading()
     fun hideLoading()
 }

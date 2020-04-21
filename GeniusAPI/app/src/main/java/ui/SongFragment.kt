@@ -7,7 +7,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -20,6 +22,7 @@ import logic.SongPresenter
 class SongFragment : Fragment(R.layout.fragment_layout), SongView {
 
     private lateinit var adapter: SongAdapter
+    private lateinit var progress: ProgressBar
 
     companion object {
 
@@ -36,6 +39,8 @@ class SongFragment : Fragment(R.layout.fragment_layout), SongView {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        progress = view.findViewById(R.id.progress)
+
         recyclerView = view.findViewById(R.id.recycler_view)
         recyclerView.layoutManager = LinearLayoutManager(context)
         this.adapter = SongAdapter(SongFragment.context) { url ->
@@ -54,6 +59,18 @@ class SongFragment : Fragment(R.layout.fragment_layout), SongView {
 
     override fun showSongs(data: List<Song>) {
         adapter.submitList(data)
+    }
+
+    override fun showError(it: Throwable) {
+        Toast.makeText(context, "Error: ${it.message}", Toast.LENGTH_LONG).show()
+    }
+
+    override fun showLoading() {
+        progress.visibility = ProgressBar.VISIBLE
+    }
+
+    override fun hideLoading() {
+        progress.visibility = ProgressBar.INVISIBLE
     }
 }
 
@@ -85,4 +102,7 @@ class SongAdapter(private val context: Context, private val clickListener: (Stri
 
 interface SongView {
     fun showSongs(data: List<Song>)
+    fun showError(it: Throwable)
+    fun showLoading()
+    fun hideLoading()
 }

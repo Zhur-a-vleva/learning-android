@@ -1,26 +1,19 @@
 package data.song
 
-import android.os.AsyncTask
 import data.Api
 import data.Song
+import io.reactivex.Single
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 
 class SongRepository() {
 
+    private val token = "YFTSs_-BbAkmrn16cEuQ-7mT1TXDpTKEASL66lDUBXRzIljYA6HBSdMfjxFcPfGA"
+
     companion object {
-
-        private var id: Int = 0
-
-        fun setId(artistId: Int) {
-            id = artistId
-        }
-
-        fun getId(): Int {
-            return id
-        }
 
         private val okHttpClient = OkHttpClient.Builder()
             .addInterceptor(HttpLoggingInterceptor().apply {
@@ -32,24 +25,16 @@ class SongRepository() {
             .baseUrl("http://api.genius.com/")
             .client(okHttpClient)
             .addConverterFactory(GsonConverterFactory.create())
+            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .build()
             .create(Api::class.java)
 
     }
 
-    class MyAsyncTask : AsyncTask<Unit, Unit, List<Song>>() {
-
-        private val token = "YFTSs_-BbAkmrn16cEuQ-7mT1TXDpTKEASL66lDUBXRzIljYA6HBSdMfjxFcPfGA"
-
-        override fun doInBackground(vararg params: Unit?): List<Song> {
-            return getSongs(getId())
-        }
-
-        private fun getSongs(id: Int): List<Song> {
-            val data = api.getSongData(id, token).execute()
-            return data.body()?.response?.songs ?: emptyList()
-        }
-
+    fun getSongs(id: Int): Single<List<Song>> {
+        return api.getSongData(id, token)
+            .map { data -> data.response.songs }
     }
+
 
 }

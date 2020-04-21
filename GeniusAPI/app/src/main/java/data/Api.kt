@@ -19,6 +19,5 @@ interface Api {
     fun getSongData(
         @Path("id") artistId: Int,
         @Query("access_token") token: String
-    ): // TODO: переделать на эрыкс
-            retrofit2.Call<Data>
+    ): Single<Data>
 }

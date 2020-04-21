@@ -30,9 +30,6 @@ class ArtistRepository {
 
     fun getArtist(id: Int): Single<Artist> {
         return api.getArtistData(id, token)
-            // f(x) = y
-            // f(Data) -> Artist
-            // Single[Data] -> Single[Artist]
             .map { data -> data.response.artist }
     }
 }
