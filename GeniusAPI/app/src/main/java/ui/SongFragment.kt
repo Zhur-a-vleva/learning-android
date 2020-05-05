@@ -16,7 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import data.Song
-import kotlinx.android.synthetic.main.my_text_view.view.*
+import kotlinx.android.synthetic.main.element_of_list.view.*
 import logic.SongPresenter
 
 class SongFragment : Fragment(R.layout.fragment_layout), SongView {
@@ -78,7 +78,7 @@ class SongAdapter(private val context: Context, private val clickListener: (Stri
     ListAdapter<Song, SongFragment.MyViewHolder>(DiffCallBack()) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SongFragment.MyViewHolder {
         return SongFragment.MyViewHolder(
-            (LayoutInflater.from(context).inflate(R.layout.my_text_view, parent, false))
+            (LayoutInflater.from(context).inflate(R.layout.element_of_list, parent, false))
         )
     }
 

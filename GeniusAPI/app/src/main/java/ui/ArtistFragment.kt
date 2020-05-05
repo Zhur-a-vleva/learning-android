@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import data.Artist
-import kotlinx.android.synthetic.main.my_text_view.view.*
+import kotlinx.android.synthetic.main.element_of_list.view.*
 import logic.ArtistPresenter
 import logic.SongPresenter
 
@@ -90,7 +90,7 @@ class ArtistAdapter(
         viewType: Int
     ): ArtistFragment.ArtistViewHolder {
         return ArtistFragment.ArtistViewHolder(
-            LayoutInflater.from(context).inflate(R.layout.my_text_view, parent, false)
+            LayoutInflater.from(context).inflate(R.layout.element_of_list, parent, false)
         )
     }
 
