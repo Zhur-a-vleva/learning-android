@@ -6,13 +6,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
-import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.card.MaterialCardView
 import data.Artist
 import kotlinx.android.synthetic.main.element_of_list.view.*
 import logic.ArtistPresenter
@@ -60,7 +60,7 @@ class ArtistFragment : Fragment(R.layout.fragment_layout), ArtistView {
     }
 
     class ArtistViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val textView: TextView = view.text_in_recyclerView
+        val card: MaterialCardView = view.card
     }
 
     override fun showArtists(data: List<Artist>) {
@@ -95,8 +95,8 @@ class ArtistAdapter(
     }
 
     override fun onBindViewHolder(holder: ArtistFragment.ArtistViewHolder, position: Int) {
-        holder.textView.text = getItem(position)?.name ?: ""
-        holder.textView.setOnClickListener {
+        holder.card.text_in_recyclerView.text = getItem(position)?.name ?: ""
+        holder.card.setOnClickListener {
             clickListener(getItem(position)?.id ?: 0)
         }
     }

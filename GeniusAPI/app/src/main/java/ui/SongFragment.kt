@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.card.MaterialCardView
 import data.Song
 import kotlinx.android.synthetic.main.element_of_list.view.*
 import logic.SongPresenter
@@ -54,7 +55,7 @@ class SongFragment : Fragment(R.layout.fragment_layout), SongView {
     }
 
     class MyViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val textView: TextView = view.text_in_recyclerView
+        val card: MaterialCardView = view.card
     }
 
     override fun showSongs(data: List<Song>) {
@@ -83,8 +84,8 @@ class SongAdapter(private val context: Context, private val clickListener: (Stri
     }
 
     override fun onBindViewHolder(holder: SongFragment.MyViewHolder, position: Int) {
-        holder.textView.text = getItem(position)?.title
-        holder.textView.setOnClickListener { clickListener(getItem(position)?.url ?: "") }
+        holder.card.text_in_recyclerView.text = getItem(position)?.title
+        holder.card.setOnClickListener { clickListener(getItem(position)?.url ?: "") }
     }
 
     class DiffCallBack : DiffUtil.ItemCallback<Song>() {
