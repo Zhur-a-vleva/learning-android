@@ -8,7 +8,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
-import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DiffUtil
@@ -84,7 +83,7 @@ class SongAdapter(private val context: Context, private val clickListener: (Stri
     }
 
     override fun onBindViewHolder(holder: SongFragment.MyViewHolder, position: Int) {
-        holder.card.text_in_recyclerView.text = getItem(position)?.title
+        holder.card.title.text = getItem(position)?.title
         holder.card.setOnClickListener { clickListener(getItem(position)?.url ?: "") }
     }
 

@@ -95,7 +95,8 @@ class ArtistAdapter(
     }
 
     override fun onBindViewHolder(holder: ArtistFragment.ArtistViewHolder, position: Int) {
-        holder.card.text_in_recyclerView.text = getItem(position)?.name ?: ""
+        holder.card.title.text = getItem(position)?.name ?: ""
+        holder.card.description.text = getItem(position)?.description?.text
         holder.card.setOnClickListener {
             clickListener(getItem(position)?.id ?: 0)
         }
