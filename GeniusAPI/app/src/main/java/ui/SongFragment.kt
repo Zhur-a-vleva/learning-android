@@ -16,7 +16,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.card.MaterialCardView
 import data.Song
-import kotlinx.android.synthetic.main.element_of_list.view.*
+import kotlinx.android.synthetic.main.song_element.view.*
 import logic.SongPresenter
 
 class SongFragment : Fragment(R.layout.fragment_layout), SongView {
@@ -54,7 +54,7 @@ class SongFragment : Fragment(R.layout.fragment_layout), SongView {
     }
 
     class MyViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val card: MaterialCardView = view.card
+        val song_card: MaterialCardView = view.song_card
     }
 
     override fun showSongs(data: List<Song>) {
@@ -78,13 +78,13 @@ class SongAdapter(private val context: Context, private val clickListener: (Stri
     ListAdapter<Song, SongFragment.MyViewHolder>(DiffCallBack()) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SongFragment.MyViewHolder {
         return SongFragment.MyViewHolder(
-            (LayoutInflater.from(context).inflate(R.layout.element_of_list, parent, false))
+            (LayoutInflater.from(context).inflate(R.layout.song_element, parent, false))
         )
     }
 
     override fun onBindViewHolder(holder: SongFragment.MyViewHolder, position: Int) {
-        holder.card.title.text = getItem(position)?.title
-        holder.card.setOnClickListener { clickListener(getItem(position)?.url ?: "") }
+        holder.song_card.song_title.text = getItem(position)?.title
+        holder.song_card.setOnClickListener { clickListener(getItem(position)?.url ?: "") }
     }
 
     class DiffCallBack : DiffUtil.ItemCallback<Song>() {

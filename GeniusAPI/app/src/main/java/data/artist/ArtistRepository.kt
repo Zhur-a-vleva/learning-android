@@ -1,7 +1,11 @@
 package data.artist
 
+import android.graphics.Bitmap
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import data.Api
 import data.Artist
+import data.ImageServer
 import io.reactivex.Single
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -26,10 +30,25 @@ class ArtistRepository {
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .build()
             .create(Api::class.java)
+
+        private val gson: Gson = GsonBuilder()
+            .setLenient()
+            .create()
+
+        private val imageServer: ImageServer = Retrofit.Builder()
+            .baseUrl("https://images.genius.com/")
+            .addConverterFactory(GsonConverterFactory.create(gson))
+            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+            .build()
+            .create(ImageServer::class.java)
     }
 
     fun getArtist(id: Int): Single<Artist> {
         return api.getArtistData(id, token)
             .map { data -> data.response.artist }
+    }
+
+    fun getPhoto(url: String): Single<Bitmap> {
+        return imageServer.getArtistPhoto(url.removePrefix("https://images.genius.com/"))
     }
 }

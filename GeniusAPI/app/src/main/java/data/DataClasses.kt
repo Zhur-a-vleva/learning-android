@@ -1,5 +1,6 @@
 package data
 
+import android.graphics.Bitmap
 import com.google.gson.annotations.SerializedName
 
 data class Data(
@@ -14,7 +15,9 @@ data class Response(
 data class Artist(
     @SerializedName("name") val name: String,
     @SerializedName("id") val id: Int,
-    @SerializedName("description") val description: Description
+    @SerializedName("image_url") val image_url: String,
+    @SerializedName("description") val description: Description,
+    val image: Bitmap
 )
 
 data class Song(

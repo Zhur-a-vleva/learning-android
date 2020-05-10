@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.card.MaterialCardView
 import data.Artist
-import kotlinx.android.synthetic.main.element_of_list.view.*
+import kotlinx.android.synthetic.main.artist_element.view.*
 import logic.ArtistPresenter
 import logic.SongPresenter
 
@@ -60,7 +60,7 @@ class ArtistFragment : Fragment(R.layout.fragment_layout), ArtistView {
     }
 
     class ArtistViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val card: MaterialCardView = view.card
+        val artist_card: MaterialCardView = view.artist_card
     }
 
     override fun showArtists(data: List<Artist>) {
@@ -90,14 +90,15 @@ class ArtistAdapter(
         viewType: Int
     ): ArtistFragment.ArtistViewHolder {
         return ArtistFragment.ArtistViewHolder(
-            LayoutInflater.from(context).inflate(R.layout.element_of_list, parent, false)
+            LayoutInflater.from(context).inflate(R.layout.artist_element, parent, false)
         )
     }
 
     override fun onBindViewHolder(holder: ArtistFragment.ArtistViewHolder, position: Int) {
-        holder.card.title.text = getItem(position)?.name ?: ""
-        holder.card.description.text = getItem(position)?.description?.text
-        holder.card.setOnClickListener {
+        holder.artist_card.artist_photo.setImageBitmap(getItem(position)?.image)
+        holder.artist_card.artist_name.text = getItem(position)?.name
+        holder.artist_card.artist_description.text = getItem(position)?.description?.text
+        holder.artist_card.setOnClickListener {
             clickListener(getItem(position)?.id ?: 0)
         }
     }

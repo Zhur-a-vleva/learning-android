@@ -16,15 +16,32 @@ class ArtistPresenter(private val view: ArtistView) {
         repository.getArtist(16775)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .doOnSubscribe { view.showLoading() }
+            .doOnSubscribe {
+                view.showLoading()
+            }
             .doOnSuccess { view.hideLoading() }
-            .subscribe({
-                val newIt =
-                    it.copy(description = Description(getTenWords(it?.description?.text ?: "")))
-                view.showArtists(listOf(newIt))
+            .subscribe({ artist ->
+                repository.getPhoto(artist.image_url)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe({ photo ->
+                        val newArtist = artist
+                            .copy(
+                                image = photo,
+                                description = Description(
+                                    getTenWords(
+                                        artist?.description?.text ?: ""
+                                    )
+                                )
+                            )
+                        view.showArtists(listOf(newArtist))
+                    }, {
+                        view.showError(it)
+                    })
             }, {
                 view.showError(it)
             })
+
     }
 
     private fun getTenWords(originText: String): String {
@@ -33,4 +50,6 @@ class ArtistPresenter(private val view: ArtistView) {
             else -> "${originText.split(" ").subList(0, 10).joinToString(" ")} ..."
         }
     }
+
+
 }
