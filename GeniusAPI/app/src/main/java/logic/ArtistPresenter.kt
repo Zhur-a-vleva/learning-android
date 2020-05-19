@@ -7,6 +7,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import ui.ArtistView
 
+
 class ArtistPresenter(private val view: ArtistView) {
 
     private val repository = ArtistRepository()
@@ -21,35 +22,25 @@ class ArtistPresenter(private val view: ArtistView) {
             }
             .doOnSuccess { view.hideLoading() }
             .subscribe({ artist ->
-                repository.getPhoto(artist.image_url)
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe({ photo ->
-                        val newArtist = artist
-                            .copy(
-                                image = photo,
-                                description = Description(
-                                    getTenWords(
-                                        artist?.description?.text ?: ""
-                                    )
-                                )
+                val newArtist = artist
+                    .copy(
+                        description = Description(
+                            getFiveWords(
+                                artist?.description?.text ?: ""
                             )
-                        view.showArtists(listOf(newArtist))
-                    }, {
-                        view.showError(it)
-                    })
+                        )
+                    )
+                view.showArtists(listOf(newArtist))
             }, {
                 view.showError(it)
             })
-
     }
 
-    private fun getTenWords(originText: String): String {
+    private fun getFiveWords(originText: String): String {
         return when (originText.split(" ").size) {
-            in 0..9 -> "$originText ..."
-            else -> "${originText.split(" ").subList(0, 10).joinToString(" ")} ..."
+            in 0..4 -> "$originText ..."
+            else -> "${originText.split(" ").subList(0, 5).joinToString(" ")} ..."
         }
     }
-
 
 }

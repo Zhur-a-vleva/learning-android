@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.google.android.material.card.MaterialCardView
 import data.Artist
 import kotlinx.android.synthetic.main.artist_element.view.*
@@ -95,7 +96,10 @@ class ArtistAdapter(
     }
 
     override fun onBindViewHolder(holder: ArtistFragment.ArtistViewHolder, position: Int) {
-        holder.artist_card.artist_photo.setImageBitmap(getItem(position)?.image)
+        Glide
+            .with(context)
+            .load(getItem(position)?.image_url)
+            .into(holder.artist_card.artist_photo)
         holder.artist_card.artist_name.text = getItem(position)?.name
         holder.artist_card.artist_description.text = getItem(position)?.description?.text
         holder.artist_card.setOnClickListener {
