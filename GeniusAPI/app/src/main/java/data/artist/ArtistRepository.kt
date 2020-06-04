@@ -26,10 +26,12 @@ class ArtistRepository {
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .build()
             .create(Api::class.java)
+
     }
 
     fun getArtist(id: Int): Single<Artist> {
         return api.getArtistData(id, token)
             .map { data -> data.response.artist }
     }
+
 }

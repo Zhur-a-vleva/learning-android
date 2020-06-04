@@ -6,15 +6,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
-import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.google.android.material.card.MaterialCardView
 import data.Artist
-import kotlinx.android.synthetic.main.my_text_view.view.*
+import kotlinx.android.synthetic.main.artist_element.view.*
 import logic.ArtistPresenter
 import logic.SongPresenter
 
@@ -36,6 +37,8 @@ class ArtistFragment : Fragment(R.layout.fragment_layout), ArtistView {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        activity?.setTitle(R.string.artist_page)
+
         val fragmentTransaction = fragmentManager?.beginTransaction()
 
         progress = view.findViewById(R.id.progress)
@@ -60,7 +63,7 @@ class ArtistFragment : Fragment(R.layout.fragment_layout), ArtistView {
     }
 
     class ArtistViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val textView: TextView = view.text_in_recyclerView
+        val artist_card: MaterialCardView = view.artist_card
     }
 
     override fun showArtists(data: List<Artist>) {
@@ -90,13 +93,18 @@ class ArtistAdapter(
         viewType: Int
     ): ArtistFragment.ArtistViewHolder {
         return ArtistFragment.ArtistViewHolder(
-            LayoutInflater.from(context).inflate(R.layout.my_text_view, parent, false)
+            LayoutInflater.from(context).inflate(R.layout.artist_element, parent, false)
         )
     }
 
     override fun onBindViewHolder(holder: ArtistFragment.ArtistViewHolder, position: Int) {
-        holder.textView.text = getItem(position)?.name ?: ""
-        holder.textView.setOnClickListener {
+        Glide
+            .with(context)
+            .load(getItem(position)?.image_url)
+            .into(holder.artist_card.artist_photo)
+        holder.artist_card.artist_name.text = getItem(position)?.name
+        holder.artist_card.artist_description.text = getItem(position)?.description?.text
+        holder.artist_card.setOnClickListener {
             clickListener(getItem(position)?.id ?: 0)
         }
     }

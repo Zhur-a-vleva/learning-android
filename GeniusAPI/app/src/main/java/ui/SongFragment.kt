@@ -8,15 +8,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
-import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.google.android.material.card.MaterialCardView
 import data.Song
-import kotlinx.android.synthetic.main.my_text_view.view.*
+import kotlinx.android.synthetic.main.song_element.view.*
 import logic.SongPresenter
 
 class SongFragment : Fragment(R.layout.fragment_layout), SongView {
@@ -39,6 +40,8 @@ class SongFragment : Fragment(R.layout.fragment_layout), SongView {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        activity?.setTitle(R.string.song_page)
+
         progress = view.findViewById(R.id.progress)
 
         recyclerView = view.findViewById(R.id.recycler_view)
@@ -54,7 +57,7 @@ class SongFragment : Fragment(R.layout.fragment_layout), SongView {
     }
 
     class MyViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val textView: TextView = view.text_in_recyclerView
+        val song_card: MaterialCardView = view.song_card
     }
 
     override fun showSongs(data: List<Song>) {
@@ -78,13 +81,17 @@ class SongAdapter(private val context: Context, private val clickListener: (Stri
     ListAdapter<Song, SongFragment.MyViewHolder>(DiffCallBack()) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SongFragment.MyViewHolder {
         return SongFragment.MyViewHolder(
-            (LayoutInflater.from(context).inflate(R.layout.my_text_view, parent, false))
+            (LayoutInflater.from(context).inflate(R.layout.song_element, parent, false))
         )
     }
 
     override fun onBindViewHolder(holder: SongFragment.MyViewHolder, position: Int) {
-        holder.textView.text = getItem(position)?.title
-        holder.textView.setOnClickListener { clickListener(getItem(position)?.url ?: "") }
+        Glide
+            .with(context)
+            .load(getItem(position)?.image_url)
+            .into(holder.song_card.song_photo)
+        holder.song_card.song_title.text = getItem(position)?.title
+        holder.song_card.setOnClickListener { clickListener(getItem(position)?.url ?: "") }
     }
 
     class DiffCallBack : DiffUtil.ItemCallback<Song>() {

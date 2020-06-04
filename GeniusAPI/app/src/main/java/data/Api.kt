@@ -7,7 +7,7 @@ import retrofit2.http.Query
 
 interface Api {
 
-    @GET("artists/{id}")
+    @GET("artists/{id}?text_format=plain")
 
     fun getArtistData(
         @Path("id") artistId: Int,
