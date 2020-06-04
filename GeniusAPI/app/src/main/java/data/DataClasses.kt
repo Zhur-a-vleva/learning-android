@@ -21,7 +21,8 @@ data class Artist(
 data class Song(
     @SerializedName("id") val id: Int,
     @SerializedName("title") val title: String,
-    @SerializedName("url") val url: String
+    @SerializedName("url") val url: String,
+    @SerializedName("header_image_url") val image_url: String
 )
 
 data class Description(

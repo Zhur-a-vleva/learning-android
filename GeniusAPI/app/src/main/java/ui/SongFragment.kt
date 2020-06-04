@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.google.android.material.card.MaterialCardView
 import data.Song
 import kotlinx.android.synthetic.main.song_element.view.*
@@ -83,6 +84,10 @@ class SongAdapter(private val context: Context, private val clickListener: (Stri
     }
 
     override fun onBindViewHolder(holder: SongFragment.MyViewHolder, position: Int) {
+        Glide
+            .with(context)
+            .load(getItem(position)?.image_url)
+            .into(holder.song_card.song_photo)
         holder.song_card.song_title.text = getItem(position)?.title
         holder.song_card.setOnClickListener { clickListener(getItem(position)?.url ?: "") }
     }
