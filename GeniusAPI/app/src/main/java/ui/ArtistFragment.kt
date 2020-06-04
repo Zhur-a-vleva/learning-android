@@ -37,6 +37,8 @@ class ArtistFragment : Fragment(R.layout.fragment_layout), ArtistView {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        activity?.setTitle(R.string.artist_page)
+
         val fragmentTransaction = fragmentManager?.beginTransaction()
 
         progress = view.findViewById(R.id.progress)

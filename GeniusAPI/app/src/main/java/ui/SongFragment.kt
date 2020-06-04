@@ -40,6 +40,8 @@ class SongFragment : Fragment(R.layout.fragment_layout), SongView {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        activity?.setTitle(R.string.song_page)
+
         progress = view.findViewById(R.id.progress)
 
         recyclerView = view.findViewById(R.id.recycler_view)
