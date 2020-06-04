@@ -21,11 +21,13 @@ class SongPresenter(private val view: SongView) {
             .observeOn(AndroidSchedulers.mainThread())
             .doOnSubscribe { view.showLoading() }
             .doOnSuccess { view.hideLoading() }
-            .subscribe({
+            .subscribe(
+                {
                 view.showSongs(it)
-            }, {
+                },
+                {
                 view.showError(it)
-            })
+                })
     }
 
 }

@@ -21,7 +21,8 @@ class ArtistPresenter(private val view: ArtistView) {
                 view.showLoading()
             }
             .doOnSuccess { view.hideLoading() }
-            .subscribe({ artist ->
+            .subscribe(
+                { artist ->
                 val newArtist = artist
                     .copy(
                         description = Description(
@@ -31,9 +32,10 @@ class ArtistPresenter(private val view: ArtistView) {
                         )
                     )
                 view.showArtists(listOf(newArtist))
-            }, {
+                },
+                {
                 view.showError(it)
-            })
+                })
     }
 
     private fun getFiveWords(originText: String): String {
